@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <h2>編輯</h2>
-  <form action="/restaurants/{{{restaurant._id}}}/edit" method="POST">
+  <form action="/restaurants/{{{restaurant._id}}}?_method=PUT" method="POST">
     <div class="form-group">
       <label for="name">餐廳名字</label>
       <input type="text" class="form-control" name="name" id="name" placeholder="餐廳名" value={{{restaurant.name}}}>

@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 const Restaurant = require('./models/restaurant')
 
 mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,6 +23,9 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: true}));
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(methodOverride('_method'))
+
+app.use('/restaurants', require('./routes/restaurants'))
 
 app.get('/', (_req, res) => {
   Restaurant.find()
@@ -33,10 +37,6 @@ app.get('/', (_req, res) => {
     })
 })
 
-app.get('/restaurants', (_req, _res) =>
-  res.redirect('/')
-)
-
 app.get('/search', (req, res) => {
   const name = req.query.restaurant_name.toLowerCase()
 
@@ -47,74 +47,6 @@ app.get('/search', (req, res) => {
       console.error(err)
       return res.send(`somthing went wrong: ${err}`)
     })
-})
-
-app.get('/restaurants/new', (_req, res) => {
-  res.render('new')
-})
-
-app.post('/restaurants/new', (req, res) => {
-  const restaurant = new Restaurant(req.body)
-
-  restaurant.save()
-  .then(restaurant => res.redirect(`/restaurants/${restaurant._id}`))
-  .catch(err => {
-    console.error(err)
-    return res.send(`somthing went wrong: ${err}`)
-  })
-})
-
-app.get('/restaurants/:id', (req, res) => {
-  Restaurant.findById(req.params.id)
-    .lean()
-    .then(restaurant => res.render('detail', {restaurant}))
-    .catch(err => {
-      console.error(err)
-      return res.send(`somthing went wrong: ${err}`)
-    })
-})
-
-app.get('/restaurants/:id/edit', (req, res) => {
-  Restaurant.findById(req.params.id)
-    .lean()
-    .then(restaurant => res.render('edit', {restaurant}))
-    .catch(err => {
-      console.error(err)
-      return res.send(`somthing went wrong: ${err}`)
-    })
-})
-
-app.post('/restaurants/:id/edit', (req, res) => {
-  Restaurant.findById(req.params.id)
-  .then(restaurant => {
-    restaurant.name = req.body.name
-    restaurant.name_en = req.body.name_en
-    restaurant.category = req.body.category
-    restaurant.phone = req.body.phone
-    restaurant.location = req.body.location
-    restaurant.google_map = req.body.google_map
-    restaurant.image = req.body.image
-    restaurant.description = req.body.description
-    restaurant.rating = req.body.rating
-    return restaurant.save();
-  })
-  .then(restaurant => res.redirect(`/restaurants/${restaurant._id}`))
-  .catch(err => {
-    console.error(err)
-    return res.send(`somthing went wrong: ${err}`)
-  })
-})
-
-app.post('/restaurants/:id/delete', (req, res) => {
-  Restaurant.findById(req.params.id)
-  .then(restaurant => {
-    restaurant.remove()
-  })
-  .then(() => res.redirect('/'))
-  .catch(err => {
-    console.error(err)
-    return res.send(`somthing went wrong: ${err}`)
-  })
 })
 
 app.listen(port, () => {

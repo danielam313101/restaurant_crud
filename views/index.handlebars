@@ -48,7 +48,7 @@
             <div class="card-footer text-muted">
               <a href="/" class="btn btn-primary">Back</a>
               <a href="/restaurants/{{{this._id}}}/edit" class="btn btn-secondary">Edit</a>
-              <form action="/restaurants/{{{this._id}}}/delete" method="POST" style="display: inline;">
+              <form action="/restaurants/{{{this._id}}}?_method=DELETE" method="POST" style="display: inline;">
                 <button type="submit" class="btn btn-danger">Delete</button>
               </form>
             </div>
