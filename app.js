@@ -33,7 +33,7 @@ app.get('/', (_req, res) => {
     })
 })
 
-app.get('restaurants', (_req, _res) =>
+app.get('/restaurants', (_req, _res) =>
   res.redirect('/')
 )
 
@@ -85,7 +85,6 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 app.post('/restaurants/:id/edit', (req, res) => {
-  req.body.rating
   Restaurant.findById(req.params.id)
   .then(restaurant => {
     restaurant.name = req.body.name
@@ -106,6 +105,18 @@ app.post('/restaurants/:id/edit', (req, res) => {
   })
 })
 
+app.post('/restaurants/:id/delete', (req, res) => {
+  Restaurant.findById(req.params.id)
+  .then(restaurant => {
+    restaurant.remove()
+  })
+  .then(() => res.redirect('/'))
+  .catch(err => {
+    console.error(err)
+    return res.send(`somthing went wrong: ${err}`)
+  })
+})
+
 app.listen(port, () => {
-  console.log('App is running at port ${port}')
+  console.log(`App is running at port ${port}`)
 })
