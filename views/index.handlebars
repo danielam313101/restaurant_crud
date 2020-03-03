@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col col-lg-10">
+      <form action="/search" method="GET" style="display: inline;">
+        <div class="input-group flex-nowrap">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">
+              <i class="material-icons">storefront</i>
+            </span>
+          </div>
+          <input type="text" name="restaurant_name" class="form-control" placeholder="Find a Restaurant" aria-label="restaurant" aria-describedby="addon-wrapping" value={{restaurant_name}}>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-10 col-12 mx-auto">
+      <div class="card-columns">
+
+        {{#each restaurants}}
+        <a href="/restaurants/{{this._id}}" class="text-secondary">
+          <div class="card mb-3">
+            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+            <div class="card-body p-3">
+              <h6 class="card-title mb-1">{{this.name}}</h6>
+
+              <div class="restaurant-category mb-1">
+                <i class="material-icons md-18">category</i>
+                <span class="category-text">
+                  {{this.category}}
+                </span>
+              </div>
+
+              <span class="badge badge-pill badge-danger font-weight-normal">
+                <span class="rating-text">
+                  {{this.rating}}
+                </span>
+                <i class="material-icons md-18">star_border</i>
+              </span>
+
+            </div>
+          </div>
+        </a>
+        {{/each}}
+
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <h2>新增</h2>
+  <form action="/restaurants/new" method="POST">
+    <div class="form-group">
+      <label for="name">餐廳名字</label>
+      <input type="text" class="form-control" name="name" id="name" placeholder="餐廳名">
+    </div>
+    <div class="form-group">
+      <label for="name_en">英文名</label>
+      <input type="text" class="form-control" name="name_en" id="name_en" placeholder="英文名">
+    </div>
+    <div class="form-group">
+      <label for="category">分類</label>
+      <input type="text" class="form-control" name="category" id="category" placeholder="分類">
+    </div>
+    <div class="form-group">
+      <label for="image">圖片URL</label>
+      <input type="text" class="form-control" name="image" id="image" placeholder="圖片URL">
+    </div>
+    <div class="form-group">
+      <label for="location">地址</label>
+      <input type="text" class="form-control" name="namlocatione_en" id="location" placeholder="餐廳地址">
+    </div>
+    <div class="form-group">
+      <label for="phone">電話</label>
+      <input type="text" class="form-control" name="phone" id="phone" placeholder="電話">
+    </div>
+    <div class="form-group">
+      <label for="google_map">Google Map URL</label>
+      <input type="text" class="form-control" name="google_map" id="google_map" placeholder="Google Map URL">
+    </div>
+    <div class="form-group">
+      <label for="rating">評分</label>
+      <input type="number" step=0.1 class="form-control" name="rating" id="rating">
+    </div>
+     <div class="form-group">
+      <label for="description">簡介</label>
+      <input type="text" class="form-control" name="description" id="description" placeholder="簡介">
+    </div>
+    <button type="submit" class="btn btn-primary">儲存</button>
+  </form>
+</div>
