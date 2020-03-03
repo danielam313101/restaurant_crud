@@ -25,29 +25,8 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(methodOverride('_method'))
 
+app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurants'))
-
-app.get('/', (_req, res) => {
-  Restaurant.find()
-    .lean()
-    .then(restaurants => res.render('index', {restaurants}))
-    .catch(err => {
-      console.error(err)
-      return res.send(`somthing went wrong: ${err}`)
-    })
-})
-
-app.get('/search', (req, res) => {
-  const name = req.query.restaurant_name.toLowerCase()
-
-  Restaurant.find({name: {$regex: name, $options:'i'}})
-    .lean()
-    .then(restaurants => res.render('index', {restaurants, restaurant_name: name}))
-    .catch(err => {
-      console.error(err)
-      return res.send(`somthing went wrong: ${err}`)
-    })
-})
 
 app.listen(port, () => {
   console.log(`App is running at port ${port}`)
