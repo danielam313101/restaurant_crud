@@ -6,6 +6,10 @@ router.get('/', (_req, _res) =>
   res.redirect('/')
 )
 
+router.get('/new', (_req, res) => {
+  res.render('new')
+})
+
 router.get('/:id', (req, res) => {
   Restaurant.findById(req.params.id)
     .lean()
@@ -14,10 +18,6 @@ router.get('/:id', (req, res) => {
       console.error(err)
       return res.send(`somthing went wrong: ${err}`)
     })
-})
-
-router.get('/new', (_req, res) => {
-  res.render('new')
 })
 
 router.post('/', (req, res) => {
